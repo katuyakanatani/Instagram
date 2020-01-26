@@ -5,7 +5,7 @@
 //  Created by USER on 2020/01/26.
 //  Copyright © 2020 katuya.kanatani. All rights reserved.
 //
-
+import Firebase
 import UIKit
 
 class TabBarController: UITabBarController, UITabBarControllerDelegate {
@@ -19,7 +19,15 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         // UITabBarControllerDelegateプロトコルのメソッドをこのクラスで処理する。
         self.delegate = self
     }
-
+    
+    override func viewDidAppear(_ animated: Bool) {
+         super.viewDidAppear(animated)
+        //currentUserがnilならログインしていない
+        if Auth.auth().currentUser == nil {
+        //ログインしていない時の処理
+        let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "Login")
+        self.present(loginViewController!, animated: true, completion: nil)
+        }
     // タブバーのアイコンがタップされた時に呼ばれるdelegateメソッドを処理する。
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         if viewController is ImageSelectViewController {
@@ -46,3 +54,4 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
     }
     */
 
+}
